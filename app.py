@@ -13,6 +13,7 @@ def pickDifficulty():
             print("Not an appropriate choice.")
         else:
             return difficulty_level
+
 def pick_random_word(difficuly_level): 
    
     if difficuly_level == "easy":
@@ -40,27 +41,37 @@ def play_game(secret_word):
     print(blank_board)
 
     while guessed_list != actual_word_list and incorrect_guesses != 0:
-         guess = raw_input("Guess a letter from a to z: ")
-         display_word = ""
-         if guess in secret_word:
-            index = secret_word.find(guess)
-            guessed_list[index] = guess
-            for items in guessed_list:
-                display_word += " " + items
-            print(display_word)
-         else:
-            incorrect_guesses -= 1 
-            incorrect_bank += guess
-            print("Thats wrong!")
-            print("You have " + str(incorrect_guesses) + " incorrect guesses left.")
-            print(incorrect_bank)
+         
+         try:
+            guess = raw_input("Guess a letter from a to z: ")
+            display_word = ""
+          
+            if len(guess) > 1  or guess.isalpha() == False:
+                 print("Guesses have to be a single character ")
+            else: 
+            
+              if guess in secret_word:
+                index = secret_word.find(guess)
+                guessed_list[index] = guess
+                for items in guessed_list:
+                    display_word += " " + items
+                print(display_word)
+              else:
+                incorrect_guesses -= 1 
+                incorrect_bank += guess
+                print("Thats wrong!")
+                print("You have " + str(incorrect_guesses) + " incorrect guesses left.")
+                print(incorrect_bank)
+        
+         except EOFError:
+            print("I see you trying to be clever with the EOFE")
+
 
     if(guessed_list == actual_word_list):
         print("You Won! Congratz!")
     else: 
         print("Im sorry, you lost!")
         print("The word was: " + secret_word)
-
 
 
 
